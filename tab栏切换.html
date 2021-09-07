@@ -49,6 +49,7 @@
             display: none;
         }
     </style>
+    <script src="jquery.min.js"></script>
 </head>
 
 <body>
@@ -69,46 +70,30 @@
             <div class="item">
                 规格与包装模块内容
             </div>
-            <div class="item" style="display: block;">
+            <div class="item">
                 售后保障模块内容
             </div>
-            <div class="item" style="display: block;">
+            <div class="item">
                 商品评价（50000）模块内容
             </div>
-            <div class="item" style="display: block;">
+            <div class="item">
                 手机社区模块内容
             </div>
         </div>
     </div>
     <script>
-        //获取元素
-        var tab_list = document.querySelector('.tab_list');
-        var lis = tab_list.querySelectorAll('li');
-        var items = document.querySelectorAll('.item');
-        //for循环绑定点击事件
-        for (var i = 0; i < lis.length; i++) {
-            //开始给5个小li 设置索引号
-            lis[i].setAttribute('index', i);
-            lis[i].onclick = function() {
-                //1.上的模块选项卡，点击某一个，
-                // 当前这一个底色会是红色，其余不变（排他思想） 修改类名的方式
-                // 干掉所有人 其余的li清除class这个类
-                for (var i = 0; i < lis.length; i++) {
-                    lis[i].className = '';
-                }
-                //留下我自己
-                this.className = 'current';
-                //2.下面的显示内容模块
-                var index = this.getAttribute('index');
+        $(function() {
+            //1.点击上部的li，当前li添加current类，其余兄弟移除类
+            $(".tab_list li").click(function() {
+                //链式编程操作
+                $(this).addClass("current").siblings().removeClass("current");
+                //2.点击的同时，得到当前li的索引号
+                var index = $(this).index();
                 console.log(index);
-                //干掉所有人 让其余的item 这些div隐藏
-                for (var i = 0; i < items.length; i++) {
-                    items[i].style.display = 'none';
-                }
-                //留下我自己 让对应的item显示出来
-                items[index].style.display = 'block';
-            }
-        }
+                //3.让下部里面相应索引号的item显示，其余的item隐藏
+                $(".tab_con .item").eq(index).show().siblings().hide();
+            });
+        })
     </script>
 </body>
 
